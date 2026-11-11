@@ -15,6 +15,7 @@ cargo test                          # everything, including doctests
 cargo test --test roundtrip         # one test file
 cargo test reference_pid -- --nocapture
 cargo clippy --all-targets
+cargo test --no-default-features   # without the bundled models
 tools/vendor-spec.sh                # regenerate spec/ from upstream (needs git, python >= 3.12)
 ```
 
@@ -26,7 +27,8 @@ describes only a metamodel (`Model`, `Package`, `ConcreteClass`, `Object`, `Data
 XML documents in `spec/models/`. So:
 
 - **No Rust type per DEXPI class.** The models are loaded at runtime, so a spec update is a
-  data update, not a code change.
+  data update, not a code change. `Models::dexpi_2_0()` (default feature `bundled-models`)
+  compiles `spec/models` in with `include_str!`, so regenerating `spec/` updates it too.
 - **One parser reads both models and instance documents.**
 - **Two layers, one-way dependency.** `xml` is syntax only and must never depend on
   `model`. Module-private items use `pub(super)`, not `pub(crate)`, which keeps each layer's

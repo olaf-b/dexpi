@@ -8,17 +8,20 @@
 //! consistent with what that something declares?
 //!
 //! ```no_run
-//! use std::path::Path;
-//!
-//! let models = dexpi::model::Models::load_from_dir(Path::new("spec/models"))?;
+//! # #[cfg(feature = "bundled-models")] {
+//! let models = dexpi::model::Models::dexpi_2_0();
 //! let text = std::fs::read_to_string("spec/examples/reference_pid.xml")?;
 //! let document = dexpi::xml::parse(&text)?;
 //!
 //! for diagnostic in models.validate(&document)? {
 //!     println!("{diagnostic}");
 //! }
+//! # }
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
+//!
+//! `Models::dexpi_2_0` needs the default `bundled-models` feature. Without it, load
+//! the model files with [`Models::load_from_dir`].
 
 mod item;
 mod load;

@@ -33,7 +33,30 @@ impl Models {
         Ok(Self { by_name })
     }
 
-    /// Load the models vendored in `spec/models`.
+    /// The DEXPI 2.0.0 models, compiled into the library.
+    ///
+    /// These are the `Builtin`, `Core`, `Plant` and `Process` files vendored in this
+    /// crate's `spec/models` (published by DEXPI e.V. under CC BY 4.0, see
+    /// `spec/LICENSE`). Each call parses them afresh, so load them once and keep the
+    /// result.
+    ///
+    /// ```
+    /// let models = dexpi::model::Models::dexpi_2_0();
+    /// assert!(models.get("Plant").is_some());
+    /// ```
+    #[cfg(feature = "bundled-models")]
+    pub fn dexpi_2_0() -> Self {
+        const SOURCES: &[(&str, &str)] = &[
+            ("Builtin", include_str!("../../spec/models/Builtin.xml")),
+            ("Core", include_str!("../../spec/models/Core.xml")),
+            ("Plant", include_str!("../../spec/models/Plant.xml")),
+            ("Process", include_str!("../../spec/models/Process.xml")),
+        ];
+        Self::load(SOURCES).expect("the bundled DEXPI 2.0 models load; the test suite checks this")
+    }
+
+    /// Load the four model files (`Builtin.xml`, `Core.xml`, `Plant.xml`,
+    /// `Process.xml`) from a directory, such as this repository's `spec/models`.
     pub fn load_from_dir(dir: &std::path::Path) -> Result<Self, Error> {
         let mut texts = Vec::new();
         for name in ["Builtin", "Core", "Plant", "Process"] {

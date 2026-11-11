@@ -1,7 +1,7 @@
 [package]
 name = "dexpi"
 description = "Byte-faithful reader and writer for DEXPI 2.0 XML, with model loading and validation"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "(MIT OR Apache-2.0) AND CC-BY-4.0"
 authors = ["Olaf Trygve Berglihn"]
@@ -9,6 +9,11 @@ repository = "https://github.com/olaf-b/dexpi"
 keywords = ["dexpi", "p-and-id", "xml", "process-engineering"]
 categories = ["parser-implementations", "science"]
 exclude = ["tools/"]
+
+[features]
+default = ["bundled-models"]
+# Compile the DEXPI 2.0 models into the library (about 1.2 MB), for `Models::dexpi_2_0`.
+bundled-models = []
 
 [dependencies]
 indexmap = "2.14.2"

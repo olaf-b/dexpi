@@ -33,6 +33,21 @@ fn loads_the_vendored_models() {
     }
 }
 
+/// The compiled-in models are the vendored files, so they must behave identically:
+/// the same models, and the same verdict on the reference P&ID.
+#[cfg(feature = "bundled-models")]
+#[test]
+fn bundled_models_match_the_vendored_files() {
+    let bundled = Models::dexpi_2_0();
+    let from_dir = models();
+    let names = |m: &Models| m.models().map(|m| m.name.clone()).collect::<Vec<_>>();
+    assert_eq!(names(&bundled), names(&from_dir));
+
+    let source = std::fs::read_to_string(spec_dir().join("examples/reference_pid.xml"))
+        .expect("reading reference_pid.xml");
+    assert_eq!(diagnose(&bundled, &source), diagnose(&from_dir, &source));
+}
+
 #[test]
 fn resolves_references_across_models() {
     let models = models();
