@@ -1,0 +1,68 @@
+<Model name="minimal" uri="http://example.org/minimal">
+  <Import prefix="Core" source="https://data.dexpi.org/models/2.0.0/Core.xml"/>
+  <Import prefix="Process" source="https://data.dexpi.org/models/2.0.0/Process.xml"/>
+  <Object type="Core/EngineeringModel">
+    <Data property="ExportDateTime">
+      <DateTime>2026-09-10T12:00:00</DateTime>
+    </Data>
+    <Data property="OriginatingSystemName">
+      <String>bfd</String>
+    </Data>
+    <Data property="OriginatingSystemVendorName">
+      <String>dexpi-bfd</String>
+    </Data>
+    <Data property="OriginatingSystemVersion">
+      <String>0.1.0</String>
+    </Data>
+    <Components property="ConceptualModel">
+      <Object id="ProcessModel1" type="Process/ProcessModel">
+        <Components property="ProcessSteps">
+          <Object id="P101" type="Process/Process.Pumping">
+            <Data property="Identifier">
+              <String>P-101</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="P101_out" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>P-101.out</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Outlet"/>
+                </Data>
+                <References objects="#S1" property="ConnectorReference"/>
+              </Object>
+            </Components>
+          </Object>
+          <Object id="V201" type="Process/Process.SeparatingByFlash">
+            <Data property="Identifier">
+              <String>V-201</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="V201_feed" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>V-201.feed</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Inlet"/>
+                </Data>
+                <References objects="#S1" property="ConnectorReference"/>
+              </Object>
+            </Components>
+          </Object>
+        </Components>
+        <Components property="ProcessConnections">
+          <Object id="S1" type="Process/Process.Stream">
+            <Data property="Identifier">
+              <String>S-1</String>
+            </Data>
+            <Data property="Label">
+              <String>Pump discharge</String>
+            </Data>
+            <References objects="#P101_out" property="Source"/>
+            <References objects="#V201_feed" property="Target"/>
+          </Object>
+        </Components>
+      </Object>
+    </Components>
+  </Object>
+</Model>

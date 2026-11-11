@@ -1,0 +1,1647 @@
+<Model name="flash_separation" uri="http://example.org/dexpi/flash_separation">
+  <Import prefix="Core" source="https://data.dexpi.org/models/2.0.0/Core.xml"/>
+  <Import prefix="Process" source="https://data.dexpi.org/models/2.0.0/Process.xml"/>
+  <Object type="Core/EngineeringModel">
+    <Data property="ExportDateTime">
+      <DateTime>2026-09-10T12:00:00</DateTime>
+    </Data>
+    <Data property="OriginatingSystemName">
+      <String>bfd</String>
+    </Data>
+    <Data property="OriginatingSystemVendorName">
+      <String>dexpi-bfd</String>
+    </Data>
+    <Data property="OriginatingSystemVersion">
+      <String>0.1.0</String>
+    </Data>
+    <Components property="ConceptualModel">
+      <Object id="ProcessModel1" type="Process/ProcessModel">
+        <Components property="MaterialComponents">
+          <Object id="Water" type="Process/Process.PureMaterialComponent">
+            <Data property="Identifier">
+              <String>Water</String>
+            </Data>
+            <Data property="Label">
+              <String>Water</String>
+            </Data>
+            <Data property="IUPAC_identifier">
+              <String>oxidane</String>
+            </Data>
+          </Object>
+          <Object id="Ethanol" type="Process/Process.PureMaterialComponent">
+            <Data property="Identifier">
+              <String>Ethanol</String>
+            </Data>
+            <Data property="Label">
+              <String>Ethanol</String>
+            </Data>
+            <Data property="IUPAC_identifier">
+              <String>ethanol</String>
+            </Data>
+          </Object>
+        </Components>
+        <Components property="ListsOfMaterialComponents">
+          <Object id="ComponentList1" type="Process/Process.ListOfMaterialComponents">
+            <References objects="#Water #Ethanol" property="Component"/>
+          </Object>
+        </Components>
+        <Components property="MaterialTemplates">
+          <Object id="Template1" type="Process/Process.MaterialTemplate">
+            <Data property="Description">
+              <AggregatedDataValue type="Core/DataTypes.MultiLanguageString">
+                <Data property="SingleLanguageStrings">
+                  <AggregatedDataValue type="Core/DataTypes.SingleLanguageString">
+                    <Data property="Language">
+                      <String>en</String>
+                    </Data>
+                    <Data property="Value">
+                      <String>Ethanol/water mixture, vapour and liquid phases</String>
+                    </Data>
+                  </AggregatedDataValue>
+                </Data>
+              </AggregatedDataValue>
+            </Data>
+            <Data property="Identifier">
+              <String>MT-1</String>
+            </Data>
+            <Data property="Label">
+              <String>Ethanol/water</String>
+            </Data>
+            <Data property="NumberOfMaterialComponents">
+              <Integer>2</Integer>
+            </Data>
+            <Data property="NumberOfPhases">
+              <Integer>2</Integer>
+            </Data>
+            <References objects="#ComponentList1" property="ListOfComponents"/>
+          </Object>
+        </Components>
+        <Components property="ProcessSteps">
+          <Object id="FEED" type="Process/Process.Source">
+            <Data property="Identifier">
+              <String>F-001</String>
+            </Data>
+            <Data property="Label">
+              <String>Feed</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="FEED_out" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>F-001.out</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Outlet"/>
+                </Data>
+                <References objects="#S1" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+            </Components>
+          </Object>
+          <Object id="P101" type="Process/Process.Pumping">
+            <Data property="Identifier">
+              <String>P-101</String>
+            </Data>
+            <Data property="Label">
+              <String>Feed pump</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="P101_in" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>P-101.in</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Inlet"/>
+                </Data>
+                <References objects="#S1" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+              <Object id="P101_out" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>P-101.out</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Outlet"/>
+                </Data>
+                <References objects="#S2" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+            </Components>
+          </Object>
+          <Object id="V201" type="Process/Process.SeparatingByFlash">
+            <Data property="Identifier">
+              <String>V-201</String>
+            </Data>
+            <Data property="Label">
+              <String>Flash drum</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="V201_feed" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>V-201.feed</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Inlet"/>
+                </Data>
+                <References objects="#S2" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+              <Object id="V201_vap" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>V-201.vap</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Outlet"/>
+                </Data>
+                <References objects="#S3" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+              <Object id="V201_liq" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>V-201.liq</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Outlet"/>
+                </Data>
+                <References objects="#S4" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+            </Components>
+          </Object>
+          <Object id="VAP" type="Process/Process.Sink">
+            <Data property="Identifier">
+              <String>S-002</String>
+            </Data>
+            <Data property="Label">
+              <String>Vapour product</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="VAP_in" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>S-002.in</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Inlet"/>
+                </Data>
+                <References objects="#S3" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+            </Components>
+          </Object>
+          <Object id="LIQ" type="Process/Process.Sink">
+            <Data property="Identifier">
+              <String>S-003</String>
+            </Data>
+            <Data property="Label">
+              <String>Liquid product</String>
+            </Data>
+            <Components property="Ports">
+              <Object id="LIQ_in" type="Process/Process.MaterialPort">
+                <Data property="Identifier">
+                  <String>S-003.in</String>
+                </Data>
+                <Data property="NominalDirection">
+                  <DataReference data="Process/Enumerations.PortDirection.Inlet"/>
+                </Data>
+                <References objects="#S4" property="ConnectorReference"/>
+                <References objects="#Template1" property="MaterialTemplateReference"/>
+              </Object>
+            </Components>
+          </Object>
+        </Components>
+        <Components property="ProcessConnections">
+          <Object id="S1" type="Process/Process.Stream">
+            <Data property="Identifier">
+              <String>S-1</String>
+            </Data>
+            <Data property="Label">
+              <String>Feed to pump</String>
+            </Data>
+            <Components property="Temperature">
+              <Object type="Core/QualifiedValue">
+                <Data property="DisplayText">
+                  <String>20 degC</String>
+                </Data>
+                <Data property="Value">
+                  <AggregatedDataValue type="Core/PhysicalQuantities.PhysicalQuantity">
+                    <Data property="Unit">
+                      <DataReference data="Core/PhysicalQuantities.TemperatureUnit.DegreeCelsius"/>
+                    </Data>
+                    <Data property="Value">
+                      <Double>20.0</Double>
+                    </Data>
+                  </AggregatedDataValue>
+                </Data>
+              </Object>
+            </Components>
+            <Components property="Pressure">
+              <Object type="Core/QualifiedValue">
+                <Data property="DisplayText">
+                  <String>1.013 bar</String>
+                </Data>
+                <Data property="Value">
+                  <AggregatedDataValue type="Core/PhysicalQuantities.PhysicalQuantity">
+                    <Data property="Unit">
+                      <DataReference data="Core/PhysicalQuantities.PressureAbsoluteUnit.Bar"/>
+                    </Data>
+                    <Data property="Value">
+                      <Double>1.013</Double>
+                    </Data>
+                  </AggregatedDataValue>
+                </Data>
+              </Object>
+            </Components>
+            <Components property="MassFlow">
+              <Object type="Core/QualifiedValue">
+                <Data property="DisplayText">
+                  <String>1200 kg/h</String>
+                </Data>
+                <Data property="Value">
+                  <AggregatedDataValue type="Core/PhysicalQuantities.PhysicalQuantity">
+                    <Data property="Unit">
+                      <DataReference data="Core/PhysicalQuantities.MassFlowRateUnit.KilogramPerHour"/>
+                    </Data>
+                    <Data property="Value">
+                      <Double>1200.0</Double>
+                    </Data>
+                  </AggregatedDataValue>
+                </Data>
+              </Object>
+            </Components>
+            <References objects="#FEED_out" property="Source"/>
+            <References objects="#P101_in" property="Target"/>
+            <References objects="#Template1" property="MaterialTemplateReference"/>
+            <References objects="#MaterialState1" property="MaterialStateReference"/>
+          </Object>
+          <Object id="S2" type="Process/Process.Stream">
+            <Data property="Identifier">
+              <String>S-2</String>
+            </Data>
+            <Data property="Label">
+              <String>Pump discharge</String>
+            </Data>
+            <References objects="#P101_out" property="Source"/>
+            <References objects="#V201_feed" property="Target"/>
+            <References objects="#Template1" property="MaterialTemplateReference"/>
+          </Object>
+          <Object id="S3" type="Process/Process.Stream">
+            <Data property="Identifier">
+              <String>S-3</String>
+            </Data>
+            <Data property="Label">
+              <String>Vapour product</String>
+            </Data>
+            <References objects="#V201_vap" property="Source"/>
+            <References objects="#VAP_in" property="Target"/>
+            <References objects="#Template1" property="MaterialTemplateReference"/>
+          </Object>
+          <Object id="S4" type="Process/Process.Stream">
+            <Data property="Identifier">
+              <String>S-4</String>
+            </Data>
+            <Data property="Label">
+              <String>Liquid product</String>
+            </Data>
+            <References objects="#V201_liq" property="Source"/>
+            <References objects="#LIQ_in" property="Target"/>
+            <References objects="#Template1" property="MaterialTemplateReference"/>
+          </Object>
+        </Components>
+        <Components property="Compositions">
+<Object id="Composition1" type="Process/Process.Composition">
+  <Data property="Display">
+    <DataReference data="Process/Enumerations.CompositionDisplay.Percent"/>
+  </Data>
+  <Components property="MoleFractiona">
+    <Object type="Core/QualifiedValue">
+      <Data property="DisplayText">
+        <String>88.0 %</String>
+      </Data>
+      <Data property="Value">
+        <AggregatedDataValue type="Core/PhysicalQuantities.PhysicalQuantity">
+          <Data property="Unit">
+            <DataReference data="Core/PhysicalQuantities.PercentageUnit.Percent"/>
+          </Data>
+          <Data property="Value">
+            <Double>88.0</Double>
+          </Data>
+        </AggregatedDataValue>
+      </Data>
+    </Object>
+  </Components>
+  <Components property="MoleFractiona">
+    <Object type="Core/QualifiedValue">
+      <Data property="DisplayText">
+        <String>12.0 %</String>
+      </Data>
+      <Data property="Value">
+        <AggregatedDataValue type="Core/PhysicalQuantities.PhysicalQuantity">
+          <Data property="Unit">
+            <DataReference data="Core/PhysicalQuantities.PercentageUnit.Percent"/>
+          </Data>
+          <Data property="Value">
+            <Double>12.0</Double>
+          </Data>
+        </AggregatedDataValue>
+      </Data>
+    </Object>
+  </Components>
+</Object></Components>
+        <Components property="MaterialStateTypes">
+<Object id="MaterialStateType1" type="Process/Process.MaterialStateType">
+  <Data property="Identifier">
+    <String>S-1 state</String>
+  </Data>
+  <Data property="Label">
+    <String>S-1</String>
+  </Data>
+  <Data property="Description">
+    <AggregatedDataValue type="Core/DataTypes.MultiLanguageString">
+      <Data property="SingleLanguageStrings">
+        <AggregatedDataValue type="Core/DataTypes.SingleLanguageString">
+          <Data property="Language">
+            <String>en</String>
+          </Data>
+          <Data property="Value">
+            <String>Material in S-1</String>
+          </Data>
+        </AggregatedDataValue>
+      </Data>
+    </AggregatedDataValue>
+  </Data>
+  <References objects="#Composition1" property="Composition"/>
+</Object></Components>
+        <Components property="MaterialStates">
+<Object id="MaterialState1" type="Process/Process.MaterialState">
+  <Data property="Description">
+    <String>Material in S-1</String>
+  </Data>
+  <Data property="Identifier">
+    <String>S-1 material</String>
+  </Data>
+  <Data property="Label">
+    <String>S-1</String>
+  </Data>
+  <References objects="#MaterialStateType1" property="State"/>
+</Object></Components>
+      </Object>
+    </Components>
+    <Components property="Diagram">
+      <Object type="Core/Diagram.Diagram">
+        <Data property="BackgroundColor">
+          <AggregatedDataValue type="Core/Diagram.Color">
+            <Data property="B">
+              <Integer>255</Integer>
+            </Data>
+            <Data property="G">
+              <Integer>255</Integer>
+            </Data>
+            <Data property="R">
+              <Integer>255</Integer>
+            </Data>
+          </AggregatedDataValue>
+        </Data>
+        <Data property="MaxX">
+          <Double>460.0</Double>
+        </Data>
+        <Data property="MaxY">
+          <Double>200.0</Double>
+        </Data>
+        <Data property="MinX">
+          <Double>0.0</Double>
+        </Data>
+        <Data property="MinY">
+          <Double>0.0</Double>
+        </Data>
+        <Data property="Name">
+          <String>Flash separation BFD</String>
+        </Data>
+        <References objects="#ProcessModel1" property="Represents"/>
+        <Components property="Groups">
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#FEED" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Transparent"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>20.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>80.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>80.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>20.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>50.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>4.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>F-001</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#P101" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Transparent"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>140.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>200.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>200.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>140.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>170.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>4.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>P-101</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#V201" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Transparent"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>260.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>90.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>320.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>90.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>320.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>150.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>260.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>150.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>290.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>4.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>V-201</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#VAP" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Transparent"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>60.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>440.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>60.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>440.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>100.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>410.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>80.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>4.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-002</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#LIQ" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Transparent"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>440.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>140.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>440.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>180.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>180.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>410.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>160.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>4.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-003</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#S1" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.PolyLine">
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>80.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>140.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.PipeFlowArrow">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Solid"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>140.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>133.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>122.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>133.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>117.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>110.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>114.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>3.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-1</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#S2" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.PolyLine">
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>200.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>260.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.PipeFlowArrow">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Solid"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>260.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>120.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>253.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>122.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>253.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>117.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>230.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>114.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>3.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-2</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#S3" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.PolyLine">
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>320.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>105.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>350.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>105.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>350.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>80.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>80.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.PipeFlowArrow">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Solid"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>80.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>373.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>82.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>373.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>77.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>365.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>74.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>3.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-3</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+          <Object type="Core/Diagram.RepresentationGroup">
+            <References objects="#S4" property="Represents"/>
+            <Components property="Groups">
+              <Object type="Core/Diagram.Symbol">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.PolyLine">
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>320.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>135.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>350.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>135.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>350.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>160.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>160.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.PipeFlowArrow">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Polygon">
+                    <Data property="FillStyle">
+                      <DataReference data="Core/Diagram.FillStyle.Solid"/>
+                    </Data>
+                    <Data property="Points">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>380.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>160.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>373.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>162.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>373.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>157.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Stroke">
+                      <AggregatedDataValue type="Core/Diagram.Stroke">
+                        <Data property="Color">
+                          <AggregatedDataValue type="Core/Diagram.Color">
+                            <Data property="B">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="G">
+                              <Integer>0</Integer>
+                            </Data>
+                            <Data property="R">
+                              <Integer>0</Integer>
+                            </Data>
+                          </AggregatedDataValue>
+                        </Data>
+                        <Data property="DashStyle">
+                          <DataReference data="Core/Diagram.DashStyle.Solid"/>
+                        </Data>
+                        <Data property="Width">
+                          <Double>0.5</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+              <Object type="Core/Diagram.Label">
+                <Components property="Elements">
+                  <Object type="Core/Diagram.Text">
+                    <Data property="Alignment">
+                      <DataReference data="Core/Diagram.TextAlignment.CenterCenter"/>
+                    </Data>
+                    <Data property="Color">
+                      <AggregatedDataValue type="Core/Diagram.Color">
+                        <Data property="B">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="G">
+                          <Integer>0</Integer>
+                        </Data>
+                        <Data property="R">
+                          <Integer>0</Integer>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Font">
+                      <String>Arial</String>
+                    </Data>
+                    <Data property="Position">
+                      <AggregatedDataValue type="Core/Diagram.Point">
+                        <Data property="X">
+                          <Double>365.0</Double>
+                        </Data>
+                        <Data property="Y">
+                          <Double>154.0</Double>
+                        </Data>
+                      </AggregatedDataValue>
+                    </Data>
+                    <Data property="Rotation">
+                      <Double>0.0</Double>
+                    </Data>
+                    <Data property="Size">
+                      <Double>3.0</Double>
+                    </Data>
+                    <Data property="Text">
+                      <String>S-4</String>
+                    </Data>
+                  </Object>
+                </Components>
+              </Object>
+            </Components>
+          </Object>
+        </Components>
+      </Object>
+    </Components>
+  </Object>
+</Model>
