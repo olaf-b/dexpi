@@ -1,0 +1,14 @@
+The DEXPI specification files in this directory are published by DEXPI e.V.
+under the Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+  models/Builtin.xml, models/Core.xml, models/Plant.xml, models/Process.xml
+  schema/DEXPI_XML_Schema.xsd
+  examples/reference_pid.xml
+
+Source: https://gitlab.com/dexpi/Specification, tag V2.0.0 (see VERSIONS.md).
+The model files were generated from the specification's Python model source
+with dexpi.specificator. The schema and the reference P&ID are copied unchanged.
+
+examples/flash_separation_bfd.xml is not part of the DEXPI specification. It is
+covered by this crate's own licence (MIT OR Apache-2.0).

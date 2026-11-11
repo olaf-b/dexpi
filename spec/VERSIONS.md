@@ -10,7 +10,7 @@ Regenerate with `tools/vendor-spec.sh`.
 
 Upstream: <https://gitlab.com/dexpi/Specification> tag `V2.0.0`,
 commit `260c81c51039789a6148a98af4c6caf23f87a3e2`, dated 2025-10-10.
-Published under a Creative Commons licence by DEXPI e.V.
+Published by DEXPI e.V. under CC BY 4.0 (see `LICENSE` in this directory).
 
 ## Why these are vendored rather than fetched
 

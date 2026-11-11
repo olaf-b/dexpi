@@ -7,6 +7,9 @@ A Rust library for the DEXPI 2.0 exchange format.
 - `dexpi::model`: loads the DEXPI 2.0 information models (Core, Plant, Process,
   Builtin) and validates documents against them.
 
+`Models::load_from_dir` takes a directory holding `Builtin.xml`, `Core.xml`,
+`Plant.xml` and `Process.xml`. This repository vendors them in `spec/models`.
+
 ```rust
 use std::path::Path;
 
@@ -28,5 +31,7 @@ regenerate them with `tools/vendor-spec.sh` (needs git and Python 3.12 or newer)
 Copyright 2026 Olaf Trygve Berglihn.
 
 Licensed under either of [Apache License, Version 2.0](LICENSE-APACHE) or
-[MIT license](LICENSE-MIT) at your option. The vendored DEXPI specification files under
-`spec/` are published by DEXPI e.V. under their own Creative Commons licence.
+[MIT license](LICENSE-MIT) at your option.
+
+The DEXPI specification files vendored under `spec/` are published by DEXPI e.V. under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See [`spec/LICENSE`](spec/LICENSE).
